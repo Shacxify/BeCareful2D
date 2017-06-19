@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{FFD2113A-20D4-CB6C-EDC5-FA469A988A79}</ProjectGuid>
+    <ProjectGuid>{9EB2ABBB-1077-5DEF-1671-EC2AB3E1E51C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -46,9 +46,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\mainBrain.cs" />
-     <Compile Include="Assets\player.cs" />
-     <Compile Include="Assets\singleSide.cs" />
+     <Compile Include="Assets\SCRIPTS\mainBrain.cs" />
+     <Compile Include="Assets\SCRIPTS\pedometer.cs" />
+     <Compile Include="Assets\SCRIPTS\player.cs" />
+     <Compile Include="Assets\SCRIPTS\singleSide.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
