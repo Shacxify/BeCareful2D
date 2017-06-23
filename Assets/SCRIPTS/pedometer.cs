@@ -11,16 +11,13 @@ public class pedometer : MonoBehaviour {
 	public int speed = 1;
 
 	void Update () {
-		GameObject.Find("Canvas/Panel/HSCOREnumber").GetComponent<Text>().text = PlayerPrefs.GetInt("Highscore").ToString();
-		if (Input.GetMouseButton(0)) {
+		//GameObject.Find("Canvas/Panel/HSCOREnumber").GetComponent<Text>().text = PlayerPrefs.GetInt("Highscore").ToString();
+		if (Input.GetMouseButton(0) && gameOver != true) {
 			distance += Time.deltaTime;
 			start = true;
 			GameObject.Find("Canvas/Panel/SCOREnumber").GetComponent<Text>().text = ((int)(distance)).ToString();
-			if (distance > PlayerPrefs.GetInt("Highscore")) {
-				PlayerPrefs.SetInt("HighScore", (int)(distance));
-				Debug.Log("NEW HIGHSCORE" + (int)(distance));
-				PlayerPrefs.Save();
-			}
+		} else if (Input.GetMouseButtonUp(0)) {
+			gameOver = true;
 		}
 	}
 }

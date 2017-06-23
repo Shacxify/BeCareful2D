@@ -23,9 +23,8 @@ public class player : MonoBehaviour {
 	}
 
 	public void OnCollisionEnter2D(Collision2D col) {
-		if (col.gameObject.name == "barrier"){
 			Debug.Log("TOuCHING!");
-		}
+			GameObject.Find("Main Camera").GetComponent<pedometer>().gameOver = true;
 	}
 
 	void FixedUpdate () {

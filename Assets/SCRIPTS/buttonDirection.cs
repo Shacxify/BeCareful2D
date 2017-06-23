@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +10,11 @@ public class buttonDirection : MonoBehaviour {
 	public void onClick () {
 		if (Application.loadedLevelName == "menu") {
 			anim.SetTrigger("ready");
+			if (gameObject.name == "Canvas/madeby") {
+				Application.OpenURL("http://www.twitter.com/shacxify");
+			}
 		}
+
 	}
 
 	public void Update() {
@@ -21,6 +25,7 @@ public class buttonDirection : MonoBehaviour {
 					Application.LoadLevel("main");
 				}
 			}
+
 		}
 	}
 }
