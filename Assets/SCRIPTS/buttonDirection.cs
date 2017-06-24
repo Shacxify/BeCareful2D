@@ -13,8 +13,13 @@ public class buttonDirection : MonoBehaviour {
 			if (gameObject.name == "Canvas/madeby") {
 				Application.OpenURL("http://www.twitter.com/shacxify");
 			}
+		} else if (Application.loadedLevelName == "main") {
+			if (gameObject.name == "replay") {
+				Application.LoadLevel("main");
+			} else if (gameObject.name == "goBack") {
+				Application.LoadLevel("menu");
+			}
 		}
-
 	}
 
 	public void Update() {
@@ -25,7 +30,6 @@ public class buttonDirection : MonoBehaviour {
 					Application.LoadLevel("main");
 				}
 			}
-
 		}
 	}
 }

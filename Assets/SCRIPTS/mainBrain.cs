@@ -11,11 +11,14 @@ public class mainBrain : MonoBehaviour {
 	public pedometer pedo;
 	public GameObject spike, newSpike;
 	public float freq;
+	public float timeTillSpawn, sinceLast;
 	public bool start, gameOver;
 	public Animator pixelcircleAnim, canvasAnim;
+	public float spikeTime;
 
 	// Update is called once per frame
 	void Start () {
+		timeTillSpawn = 1;
 		baseSpeed = speed;
 		player = GameObject.Find("Canvas/pixelcircle");
 		pedo = GameObject.Find("Main Camera").GetComponent<pedometer>();
@@ -27,6 +30,14 @@ public class mainBrain : MonoBehaviour {
 	void Update () {
 		start = GameObject.Find("Main Camera").GetComponent<pedometer>().start;
 		gameOver = GameObject.Find("Main Camera").GetComponent<pedometer>().gameOver;
+
+
+		if (sinceLast <= 0) {
+			createSpike(3);
+			//spikeTime = 5;
+			sinceLast = 5;
+		}
+		sinceLast -= Time.deltaTime * (speed * 15);
 
 		if (start == true) {
 			pixelcircleAnim.SetTrigger("start");
@@ -41,7 +52,7 @@ public class mainBrain : MonoBehaviour {
 		}
 		//Create random spike
 		if (Input.GetKeyDown("j")) {
-			createSpike();
+			createSpike(3);
 		}
 
 		//Move the LEFT and RIGHT barriers down
@@ -66,14 +77,19 @@ public class mainBrain : MonoBehaviour {
 
 
 
-	void createSpike () {
-		int decide = roll();
-		if (decide >= 1) {
-			newSpike = Instantiate(spike, new Vector3(-1.4f, 6.87f, 1), Quaternion.Euler(0, 0, 0));
-			newSpike.transform.localScale = new Vector2(8,8);
-		} else if (decide < 1) {
-			newSpike = Instantiate(spike, new Vector3(1.4f, 6.87f, 1), Quaternion.Euler(0, 0, 0));
-			newSpike.transform.localScale = new Vector2(-8,8);
+	void createSpike (int amount) {
+		float posY = 6.87f;
+		for (int i = amount; i > 0; i--) {
+			int decide = roll();
+			Debug.Log("LOGGED");
+			if (decide >= 1) {
+				newSpike = Instantiate(spike, new Vector3(-1.4f, posY, 1), Quaternion.Euler(0, 0, 0));
+				newSpike.transform.localScale = new Vector2(8,8);
+			} else if (decide < 1) {
+				newSpike = Instantiate(spike, new Vector3(1.4f, posY, 1), Quaternion.Euler(0, 0, 0));
+				newSpike.transform.localScale = new Vector2(-8,8);
+			}
+		posY += 2.34f;
 		}
 	}
 }
