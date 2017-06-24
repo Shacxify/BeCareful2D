@@ -25,19 +25,29 @@ public class mainBrain : MonoBehaviour {
 		level = 0;
 		pixelcircleAnim = player.GetComponent<Animator>();
 		canvasAnim = GameObject.Find("Canvas").GetComponent<Animator>();
+		un = GameObject.Find("Canvas/first");
+		dos = GameObject.Find("Canvas/second");
+		speed = .10f;
 	}
 
 	void Update () {
 		start = GameObject.Find("Main Camera").GetComponent<pedometer>().start;
 		gameOver = GameObject.Find("Main Camera").GetComponent<pedometer>().gameOver;
 
-
-		if (sinceLast <= 0) {
-			createSpike(3);
-			//spikeTime = 5;
-			sinceLast = 5;
+		if (start == true && gameOver != true) {
+			if (sinceLast <= 0) {
+				if ((int)pedo.distance > 20) {
+					createSpike(5);
+					freq = freq * .50f;
+				} else if ((int)pedo.distance > 10){
+					createSpike(3);
+				} else if ((int)pedo.distance > 2) {
+					createSpike(1);
+				}
+				sinceLast = 5;
+			}
+			sinceLast -= Time.deltaTime * (speed * 15);
 		}
-		sinceLast -= Time.deltaTime * (speed * 15);
 
 		if (start == true) {
 			pixelcircleAnim.SetTrigger("start");
