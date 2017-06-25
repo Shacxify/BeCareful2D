@@ -5,7 +5,10 @@ using Facebook.Unity;
 
 public class ask4LOGIN : MonoBehaviour {
 
+	public int score;
+	public Text userIdText;
 	void Awake ()
+
 {
     if (!FB.IsInitialized) {
         // Initialize the Facebook SDK
@@ -28,34 +31,24 @@ private void InitCallback ()
     }
 }
 
-private void OnHideUnity (bool isGameShown)
-{
-    if (!isGameShown) {
-        // Pause the game - we will need to hide
-        Time.timeScale = 0;
-    } else {
-        // Resume the game - we're getting focus again
-        Time.timeScale = 1;
-    }
-}
-
 public void FBlogin() {
-	List<string> permissions = new List<string> {};
-	permissions.Add ("public_profile");
-
 	FB.LogInWithReadPermissions(permissions, AuthCallBack);
 }
 
 private void AuthCallBack (ILoginResult result) {
-    if (result.Error != null) {
-			Debug.Log(result.Error);
+    if (FB.IsLoggedIn) {
+			AccessToken token = AccessToken.CurrentAccessToken;
+			userIdText.text = token.UserId;
 		} else {
-			if (FB.IsLoggedIn) {
-				Debug.Log("FB is logged in");
-			} else {
-				Debug.Log("FB is not logged in");
-			}
+			Debug.Log("Canceled Login");
 		}
+}
+
+public void Share() {
+	score = GameObject.Find("Main Camera").GetComponent<mainBrain>().finalDistance;
+
+	FB.ShareLink(contentTitle:"beCAREFUL",
+								contentDescription:"");
 }
 
 }

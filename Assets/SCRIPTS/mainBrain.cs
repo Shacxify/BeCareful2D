@@ -15,6 +15,7 @@ public class mainBrain : MonoBehaviour {
 	public bool start, gameOver;
 	public Animator pixelcircleAnim, canvasAnim;
 	public float spikeTime;
+	public int finalDistance;
 
 	// Update is called once per frame
 	void Start () {
@@ -57,6 +58,7 @@ public class mainBrain : MonoBehaviour {
 		}
 
 		if (gameOver == true) {
+			finalDistance = (int)pedo.distance;
 			pixelcircleAnim.SetTrigger("gameover");
 			canvasAnim.SetTrigger("gameover");
 		}
