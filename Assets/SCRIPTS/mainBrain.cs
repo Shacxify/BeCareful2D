@@ -39,7 +39,7 @@ public class mainBrain : MonoBehaviour {
 			if (sinceLast <= 0) {
 				if ((int)pedo.distance > 20) {
 					createSpike(5);
-					freq = freq * .50f;
+					freq = freq * 1.50f;
 				} else if ((int)pedo.distance > 10){
 					createSpike(3);
 				} else if ((int)pedo.distance > 2) {

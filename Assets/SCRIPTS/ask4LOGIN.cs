@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Facebook.Unity;
 
 public class ask4LOGIN : MonoBehaviour {
@@ -9,7 +10,7 @@ public class ask4LOGIN : MonoBehaviour {
 	public Text userIdText;
 	void Awake ()
 
-{
+		{
     if (!FB.IsInitialized) {
         // Initialize the Facebook SDK
         FB.Init(InitCallback, OnHideUnity);
@@ -32,7 +33,7 @@ private void InitCallback ()
 }
 
 public void FBlogin() {
-	FB.LogInWithReadPermissions(permissions, AuthCallBack);
+	FB.LogInWithReadPermissions(callback:AuthCallBack);
 }
 
 private void AuthCallBack (ILoginResult result) {
@@ -49,6 +50,17 @@ public void Share() {
 
 	FB.ShareLink(contentTitle:"beCAREFUL",
 								contentDescription:"");
+	callback:OnShare();
+}
+
+private void OnShare (IShareResult result) {
+	if (result.Cancelled || !string.IsNullOrEmpty(result.Error)) {
+		Debug.Log("ShareLink Error: " + result.error);
+	} else if (!string.IsNullOrEmpty(result.PostId)) {
+		Debug.Log(result.PostId);
+	} else {
+		Debug.Log("Share Succeed");
+	}
 }
 
 }
