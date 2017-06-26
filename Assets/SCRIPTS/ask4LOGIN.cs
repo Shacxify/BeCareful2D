@@ -6,61 +6,21 @@ using Facebook.Unity;
 
 public class ask4LOGIN : MonoBehaviour {
 
-	public int score;
-	public Text userIdText;
-	void Awake ()
+	private const string FACEBOOK_APP_ID = "123456789000";
+private const string FACEBOOK_URL = "http://www.facebook.com/dialog/feed";
 
-		{
-    if (!FB.IsInitialized) {
-        // Initialize the Facebook SDK
-        FB.Init(InitCallback, OnHideUnity);
-    } else {
-        // Already initialized, signal an app activation App Event
-        FB.ActivateApp();
-    }
+public void onClick() {
+	ShareToFacebook();
 }
 
-private void InitCallback ()
+void ShareToFacebook (/*string linkParameter, string nameParameter, string captionParameter, string descriptionParameter, string pictureParameter, string redirectParameter*/)
 {
-    if (FB.IsInitialized) {
-        // Signal an app activation App Event
-        FB.ActivateApp();
-        // Continue with Facebook SDK
-        // ...
-    } else {
-        Debug.Log("Failed to Initialize the Facebook SDK");
-    }
-}
-
-public void FBlogin() {
-	FB.LogInWithReadPermissions(callback:AuthCallBack);
-}
-
-private void AuthCallBack (ILoginResult result) {
-    if (FB.IsLoggedIn) {
-			AccessToken token = AccessToken.CurrentAccessToken;
-			userIdText.text = token.UserId;
-		} else {
-			Debug.Log("Canceled Login");
-		}
-}
-
-public void Share() {
-	score = GameObject.Find("Main Camera").GetComponent<mainBrain>().finalDistance;
-
-	FB.ShareLink(contentTitle:"beCAREFUL",
-								contentDescription:"");
-	callback:OnShare();
-}
-
-private void OnShare (IShareResult result) {
-	if (result.Cancelled || !string.IsNullOrEmpty(result.Error)) {
-		Debug.Log("ShareLink Error: " + result.error);
-	} else if (!string.IsNullOrEmpty(result.PostId)) {
-		Debug.Log(result.PostId);
-	} else {
-		Debug.Log("Share Succeed");
-	}
+Application.OpenURL (FACEBOOK_URL + "?app_id=" + FACEBOOK_APP_ID +
+"&link=" + WWW.EscapeURL("https//:www.google.com") +
+"&name=" + WWW.EscapeURL("beCAREFUL") +
+"&caption=" + WWW.EscapeURL("HIGHSCORE!") +
+"&description=" + WWW.EscapeURL("memeLIFE") +
+"&redirect_uri=" + WWW.EscapeURL("http://www.facebook.com/"));
 }
 
 }
