@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,21 +6,65 @@ using Facebook.Unity;
 
 public class ask4LOGIN : MonoBehaviour {
 
-	private const string FACEBOOK_APP_ID = "123456789000";
-private const string FACEBOOK_URL = "http://www.facebook.com/dialog/feed";
+	// Awake function from Unity's MonoBehavior
+	void Awake ()
+	{
+		if (!FB.IsInitialized) {
+			// Initialize the Facebook SDK
+			FB.Init(InitCallback, OnHideUnity);
+		} else {
+			// Already initialized, signal an app activation App Event
+			FB.ActivateApp();
+		}
+	}
 
-public void onClick() {
-	ShareToFacebook();
-}
+	private void InitCallback ()
+	{
+		if (FB.IsInitialized) {
+			// Signal an app activation App Event
+			FB.ActivateApp();
+			// Continue with Facebook SDK
+			// ...
+		} else {
+			Debug.Log("Failed to Initialize the Facebook SDK");
+		}
+	}
 
-void ShareToFacebook (/*string linkParameter, string nameParameter, string captionParameter, string descriptionParameter, string pictureParameter, string redirectParameter*/)
-{
-Application.OpenURL (FACEBOOK_URL + "?app_id=" + FACEBOOK_APP_ID +
-"&link=" + WWW.EscapeURL("https//:www.google.com") +
-"&name=" + WWW.EscapeURL("beCAREFUL") +
-"&caption=" + WWW.EscapeURL("HIGHSCORE!") +
-"&description=" + WWW.EscapeURL("memeLIFE") +
-"&redirect_uri=" + WWW.EscapeURL("http://www.facebook.com/"));
-}
+	private void OnHideUnity (bool isGameShown)
+	{
+		if (!isGameShown) {
+			// Pause the game - we will need to hide
+			Time.timeScale = 0;
+		} else {
+			// Resume the game - we're getting focus again
+			Time.timeScale = 1;
+		}
+	}
 
-}
+
+
+
+		private void AuthCallback (ILoginResult result) {
+
+			if (FB.IsLoggedIn) {
+				// AccessToken class will have session details
+				var aToken = Facebook.Unity.AccessToken.CurrentAccessToken;
+				// Print current access token's User ID
+				if (aToken != null) {
+				Debug.Log(aToken.UserId);
+				// Print current access token's granted permissions
+				foreach (string perm in aToken.Permissions) {
+					Debug.Log(perm);
+				}
+			}
+			} else {
+				Debug.Log("User cancelled login");
+			}
+		}
+
+		public void onClick () {
+			var perms = new List<string>(){"public_profile", "email", "user_friends"};
+			FB.LogInWithReadPermissions(perms, AuthCallback);
+		}
+
+	}
