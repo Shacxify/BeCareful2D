@@ -44,18 +44,30 @@ public class ask4LOGIN : MonoBehaviour {
 
 
 
+private void ShareCallback (IShareResult result) {
+    if (result.Cancelled || !string.IsNullOrEmpty(result.Error)) {
+        Debug.Log("ShareLink Error: "+result.Error);
+    } else if (!string.IsNullOrEmpty(result.PostId)) {
+        // Print post identifier of the shared content
+        Debug.Log(result.PostId);
+    } else {
+        // Share succeeded without postID
+        Debug.Log("ShareLink success!");
+    }
+}
+
+
+
+
 		private void AuthCallback (ILoginResult result) {
 
 			if (FB.IsLoggedIn) {
 				// AccessToken class will have session details
-				var aToken = Facebook.Unity.AccessToken.CurrentAccessToken;
+				AccessToken aToken = Facebook.Unity.AccessToken.CurrentAccessToken;
 				// Print current access token's User ID
 				if (aToken != null) {
 				Debug.Log(aToken.UserId);
 				// Print current access token's granted permissions
-				foreach (string perm in aToken.Permissions) {
-					Debug.Log(perm);
-				}
 			}
 			} else {
 				Debug.Log("User cancelled login");
@@ -63,8 +75,9 @@ public class ask4LOGIN : MonoBehaviour {
 		}
 
 		public void onClick () {
-			var perms = new List<string>(){"public_profile", "email", "user_friends"};
-			FB.LogInWithReadPermissions(perms, AuthCallback);
+			//var perms = new List<string>(){"public_profile", "email", "user_friends"};
+			FB.LogInWithReadPermissions(callback:AuthCallback);
 		}
+
 
 	}
