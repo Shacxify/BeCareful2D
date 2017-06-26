@@ -11,14 +11,14 @@ public class ask4LOGIN : MonoBehaviour {
 	{
 		if (!FB.IsInitialized) {
 			// Initialize the Facebook SDK
-			FB.Init(InitCallback, OnHideUnity);
+			FB.Init();
 		} else {
 			// Already initialized, signal an app activation App Event
 			FB.ActivateApp();
 		}
 	}
 
-	private void InitCallback ()
+	/*private void InitCallback ()
 	{
 		if (FB.IsInitialized) {
 			// Signal an app activation App Event
@@ -39,7 +39,7 @@ public class ask4LOGIN : MonoBehaviour {
 			// Resume the game - we're getting focus again
 			Time.timeScale = 1;
 		}
-	}
+	}*/
 
 
 
@@ -65,6 +65,8 @@ private void ShareCallback (IShareResult result) {
 				// AccessToken class will have session details
 				AccessToken aToken = Facebook.Unity.AccessToken.CurrentAccessToken;
 				// Print current access token's User ID
+
+
 				if (aToken != null) {
 				Debug.Log(aToken.UserId);
 				// Print current access token's granted permissions
