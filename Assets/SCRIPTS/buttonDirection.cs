@@ -6,6 +6,7 @@ public class buttonDirection : MonoBehaviour {
 
 	public bool goToMain;
 	public Animator anim;
+	public bool shareToggle = false;
 
 	public void onClick () {
 		if (Application.loadedLevelName == "menu") {
@@ -14,10 +15,20 @@ public class buttonDirection : MonoBehaviour {
 				Application.OpenURL("http://www.twitter.com/shacxify");
 			}
 		} else if (Application.loadedLevelName == "main") {
+
 			if (gameObject.name == "replay") {
 				Application.LoadLevel("main");
 			} else if (gameObject.name == "goBack") {
 				Application.LoadLevel("menu");
+			} else if (gameObject.name == "share") {
+				if (shareToggle == false) {
+					shareToggle = true;
+					anim.SetBool("share", shareToggle);
+				} else if (shareToggle == true) {
+					shareToggle = false;
+					anim.SetBool("share", shareToggle);
+				}
+
 			}
 		}
 	}
@@ -30,6 +41,8 @@ public class buttonDirection : MonoBehaviour {
 					Application.LoadLevel("main");
 				}
 			}
+		} else if (Application.loadedLevelName == "main") {
+			anim = GameObject.Find("Canvas").GetComponent<Animator>();
 		}
 	}
 }

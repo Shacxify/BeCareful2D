@@ -6,80 +6,59 @@ using Facebook.Unity;
 
 public class ask4LOGIN : MonoBehaviour {
 
-	// Awake function from Unity's MonoBehavior
-	void Awake ()
-	{
-		if (!FB.IsInitialized) {
-			// Initialize the Facebook SDK
-			FB.Init();
-		} else {
-			// Already initialized, signal an app activation App Event
-			FB.ActivateApp();
-		}
+	private const string FACEBOOK_APP_ID = "123456789000";
+	private const string FACEBOOK_URL = "http://www.facebook.com/dialog/feed";
+	private int roll;
+	private string sent;
+	private int finalScore;
+
+	public void Awake () {
+		finalScore = (int)GameObject.Find("Camera").GetComponent<pedometer>().distance;
 	}
 
-	/*private void InitCallback ()
-	{
-		if (FB.IsInitialized) {
-			// Signal an app activation App Event
-			FB.ActivateApp();
-			// Continue with Facebook SDK
-			// ...
-		} else {
-			Debug.Log("Failed to Initialize the Facebook SDK");
+	public void onClick () {
+		if (gameObject.name == "fb") {
+				//ShareToFacebook("");
+		} else if (gameObject.name == "twitterlogo") {
+			roll = Random.Range(1,5);
+			switch(roll) {
+				case 1:
+					sent = "I doubt you can beat me!";
+					break;
+				case 2:
+					sent = "Try to beat me!";
+					break;
+				case 3:
+					sent = "You can't beat me!";
+					break;
+				case 4:
+					sent = "Think you can beat that?";
+					break;
+			}
+				ShareToTwitter("I scored " + finalScore + " on beCAREFUL. " + sent);
 		}
+
 	}
 
-	private void OnHideUnity (bool isGameShown)
+
+	void ShareToFacebook (string linkParameter, string nameParameter, string captionParameter, string descriptionParameter, string pictureParameter, string redirectParameter)
 	{
-		if (!isGameShown) {
-			// Pause the game - we will need to hide
-			Time.timeScale = 0;
-		} else {
-			// Resume the game - we're getting focus again
-			Time.timeScale = 1;
-		}
-	}*/
+		Application.OpenURL (FACEBOOK_URL + "?app_id=" + FACEBOOK_APP_ID +
+		"&link=" + WWW.EscapeURL(linkParameter) +
+		"&name=" + WWW.EscapeURL(nameParameter) +
+		"&caption=" + WWW.EscapeURL(captionParameter) +
+		"&description=" + WWW.EscapeURL(descriptionParameter) +
+		"&picture=" + WWW.EscapeURL(pictureParameter) +
+		"&redirect_uri=" + WWW.EscapeURL(redirectParameter));
+	}
 
+	private const string TWITTER_ADDRESS = "http://twitter.com/intent/tweet";
+	private const string TWEET_LANGUAGE = "en";
 
-
-
-private void ShareCallback (IShareResult result) {
-    if (result.Cancelled || !string.IsNullOrEmpty(result.Error)) {
-        Debug.Log("ShareLink Error: "+result.Error);
-    } else if (!string.IsNullOrEmpty(result.PostId)) {
-        // Print post identifier of the shared content
-        Debug.Log(result.PostId);
-    } else {
-        // Share succeeded without postID
-        Debug.Log("ShareLink success!");
-    }
+	void ShareToTwitter (string textToDisplay)
+	{
+		Application.OpenURL(TWITTER_ADDRESS +
+		"?text=" + WWW.EscapeURL(textToDisplay) +
+		"&amp;lang=" + WWW.EscapeURL(TWEET_LANGUAGE));
+	}
 }
-
-
-
-
-		private void AuthCallback (ILoginResult result) {
-
-			if (FB.IsLoggedIn) {
-				// AccessToken class will have session details
-				AccessToken aToken = Facebook.Unity.AccessToken.CurrentAccessToken;
-				// Print current access token's User ID
-
-
-				if (aToken != null) {
-				Debug.Log(aToken.UserId);
-				// Print current access token's granted permissions
-			}
-			} else {
-				Debug.Log("User cancelled login");
-			}
-		}
-
-		public void onClick () {
-			//var perms = new List<string>(){"public_profile", "email", "user_friends"};
-			FB.LogInWithReadPermissions(callback:AuthCallback);
-		}
-
-
-	}
