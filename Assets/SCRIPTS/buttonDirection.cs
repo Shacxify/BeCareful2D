@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Advertisements;
 
 public class buttonDirection : MonoBehaviour {
 
@@ -17,8 +18,16 @@ public class buttonDirection : MonoBehaviour {
 		} else if (Application.loadedLevelName == "main") {
 
 			if (gameObject.name == "replay") {
+				int roll = Random.Range(0,2);
+				if (roll == 0) {
+					ShowAd();
+				}
 				Application.LoadLevel("main");
 			} else if (gameObject.name == "goBack") {
+				int roll = Random.Range(0,2);
+				if (roll == 0) {
+					ShowAd();
+				}
 				Application.LoadLevel("menu");
 			} else if (gameObject.name == "share") {
 				if (shareToggle == false) {
@@ -45,4 +54,12 @@ public class buttonDirection : MonoBehaviour {
 			anim = GameObject.Find("Canvas").GetComponent<Animator>();
 		}
 	}
+
+	public void ShowAd()
+  {
+    if (Advertisement.IsReady())
+    {
+      Advertisement.Show();
+    }
+  }
 }

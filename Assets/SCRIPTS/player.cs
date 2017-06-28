@@ -7,6 +7,8 @@ public class player : MonoBehaviour {
 
 	public float moveSpeed;
 	public Rigidbody2D rb;
+	Ray ray;
+	RaycastHit hit;
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +17,7 @@ public class player : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButton(0)) {
+		if (Input.GetMouseButton(0) && Input.mousePosition == gameObject.transform.position) {
 			Vector3 curPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			curPos.z = 0;
 			gameObject.transform.position = curPos;
