@@ -10,31 +10,33 @@ public class ask4LOGIN : MonoBehaviour {
 	private const string FACEBOOK_URL = "http://www.facebook.com/dialog/feed";
 	private int roll;
 	private string sent;
-	private int finalScore;
+	public int finalScore;
 
-	public void Awake () {
-		finalScore = (int)GameObject.Find("Camera").GetComponent<pedometer>().distance;
+	public void Update () {
+		finalScore = (int)GameObject.Find("Main Camera").GetComponent<pedometer>().distance;
 	}
 
 	public void onClick () {
+		roll = Random.Range(1,5);
+		switch(roll) {
+			case 1:
+				sent = "I doubt you can beat me!";
+				break;
+			case 2:
+				sent = "Try to beat me!";
+				break;
+			case 3:
+				sent = "You can't beat me!";
+				break;
+			case 4:
+				sent = "Think you can beat that?";
+				break;
+		}
+
 		if (gameObject.name == "fb") {
 				//ShareToFacebook("");
 		} else if (gameObject.name == "twitterlogo") {
-			roll = Random.Range(1,5);
-			switch(roll) {
-				case 1:
-					sent = "I doubt you can beat me!";
-					break;
-				case 2:
-					sent = "Try to beat me!";
-					break;
-				case 3:
-					sent = "You can't beat me!";
-					break;
-				case 4:
-					sent = "Think you can beat that?";
-					break;
-			}
+
 				ShareToTwitter("I scored " + finalScore + " on beCAREFUL. " + sent);
 		}
 
