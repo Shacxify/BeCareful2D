@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,29 +9,46 @@ public class player : MonoBehaviour {
 	public Rigidbody2D rb;
 	Ray ray;
 	RaycastHit hit;
+	public bool mouseOver;
 
 	// Use this for initialization
 	void Start () {
+		mouseOver = false;
 		rb = gameObject.GetComponent<Rigidbody2D>();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButton(0) && Input.mousePosition == gameObject.transform.position) {
+		if (Input.GetMouseButton(0) && mouseOver) {
 			Vector3 curPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			curPos.z = 0;
 			gameObject.transform.position = curPos;
+
+		}
+
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit = new RaycastHit();
+		if(Input.GetMouseButton(0)) {
+			if(Physics.Raycast(ray, out hit)) {
+				print(hit.collider.name);
+			}
 		}
 	}
 
 	public void OnCollisionEnter2D(Collision2D col) {
-			Debug.Log("TOuCHING!");
-			GameObject.Find("Main Camera").GetComponent<pedometer>().gameOver = true;
+		Debug.Log("TOuCHING!");
+		GameObject.Find("Main Camera").GetComponent<pedometer>().gameOver = true;
 	}
+
+	public void OnMouseOver () {
+		mouseOver = true;
+	}
+
+
 
 	void FixedUpdate () {
 		rb.velocity = new Vector2(0,0);
-    rb.angularVelocity = 0f;
+		rb.angularVelocity = 0f;
 		rb.AddForce(new Vector2(moveSpeed,moveSpeed));
 	}
 }
