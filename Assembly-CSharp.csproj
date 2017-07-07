@@ -60,6 +60,7 @@
      <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\Pay.cs" />
      <Compile Include="Assets\SCRIPTS\ask4LOGIN.cs" />
      <Compile Include="Assets\SCRIPTS\buttonDirection.cs" />
+     <Compile Include="Assets\SCRIPTS\dndol.cs" />
      <Compile Include="Assets\SCRIPTS\draggable.cs" />
      <Compile Include="Assets\SCRIPTS\mainBrain.cs" />
      <Compile Include="Assets\SCRIPTS\obstacleMovement.cs" />

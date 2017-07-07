@@ -12,7 +12,7 @@ public class buttonDirection : MonoBehaviour {
 	public void onClick () {
 		if (Application.loadedLevelName == "menu") {
 			anim.SetTrigger("ready");
-			if (gameObject.name == "Canvas/madeby") {
+			if (gameObject.name == "madeby") {
 				Application.OpenURL("http://www.twitter.com/shacxify");
 			}
 		} else if (Application.loadedLevelName == "main") {
