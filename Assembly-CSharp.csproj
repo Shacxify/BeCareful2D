@@ -63,6 +63,7 @@
      <Compile Include="Assets\SCRIPTS\dndol.cs" />
      <Compile Include="Assets\SCRIPTS\draggable.cs" />
      <Compile Include="Assets\SCRIPTS\mainBrain.cs" />
+     <Compile Include="Assets\SCRIPTS\mute.cs" />
      <Compile Include="Assets\SCRIPTS\obstacleMovement.cs" />
      <Compile Include="Assets\SCRIPTS\pedometer.cs" />
      <Compile Include="Assets\SCRIPTS\player.cs" />

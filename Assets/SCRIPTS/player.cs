@@ -10,6 +10,8 @@ public class player : MonoBehaviour {
 	Ray ray;
 	RaycastHit hit;
 	public bool mouseOver;
+	public AudioSource deathSound;
+	public AudioClip deathsound;
 
 	// Use this for initialization
 	void Start () {
@@ -38,6 +40,8 @@ public class player : MonoBehaviour {
 	public void OnCollisionEnter2D(Collision2D col) {
 		Debug.Log("TOuCHING!");
 		GameObject.Find("Main Camera").GetComponent<pedometer>().gameOver = true;
+		deathSound.PlayOneShot(deathsound);
+		Destroy(gameObject.GetComponent<Collider2D>());
 	}
 
 	public void OnMouseOver () {
