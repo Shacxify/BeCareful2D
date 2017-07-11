@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Advertisements;
 
 public class buttonDirection : MonoBehaviour {
@@ -12,6 +13,7 @@ public class buttonDirection : MonoBehaviour {
 	public void onClick () {
 		if (Application.loadedLevelName == "menu") {
 			anim.SetTrigger("ready");
+			GameObject.Find("Canvas/title/HSCOREnumber").GetComponent<Text>().text = PlayerPrefs.GetInt("highscore").ToString();
 			if (gameObject.name == "madeby") {
 				Application.OpenURL("http://www.twitter.com/shacxify");
 			}

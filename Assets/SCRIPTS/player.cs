@@ -48,7 +48,12 @@ public class player : MonoBehaviour {
 		mouseOver = true;
 	}
 
-
+	public void OnMouseUp () {
+		if (gameObject.GetComponent<Collider2D>() != null) {
+			deathSound.PlayOneShot(deathsound);
+			Destroy(gameObject.GetComponent<Collider2D>());
+		}
+	}
 
 	void FixedUpdate () {
 		rb.velocity = new Vector2(0,0);

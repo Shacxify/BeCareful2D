@@ -6,7 +6,7 @@ using Facebook.Unity;
 
 public class ask4LOGIN : MonoBehaviour {
 
-	private const string FACEBOOK_APP_ID = "123456789000";
+	private const string FACEBOOK_APP_ID = "118943272041914";
 	private const string FACEBOOK_URL = "http://www.facebook.com/dialog/feed";
 	private int roll;
 	private string sent;
@@ -34,7 +34,8 @@ public class ask4LOGIN : MonoBehaviour {
 		}
 
 		if (gameObject.name == "fb") {
-				//ShareToFacebook("");
+				ShareToFacebook("BeCAREFUL", "I scored " + finalScore + " on beCAREFUL. " + sent, "I scored " + finalScore + " on beCAREFUL. " + sent, "https://www.google.com");
+
 		} else if (gameObject.name == "twitterlogo") {
 
 				ShareToTwitter("I scored " + finalScore + " on beCAREFUL. " + sent);
@@ -43,14 +44,14 @@ public class ask4LOGIN : MonoBehaviour {
 	}
 
 
-	void ShareToFacebook (string linkParameter, string nameParameter, string captionParameter, string descriptionParameter, string pictureParameter, string redirectParameter)
+	void ShareToFacebook (/*string linkParameter,*/ string nameParameter, string captionParameter, string descriptionParameter, /*string pictureParameter,*/ string redirectParameter)
 	{
 		Application.OpenURL (FACEBOOK_URL + "?app_id=" + FACEBOOK_APP_ID +
-		"&link=" + WWW.EscapeURL(linkParameter) +
+		//"&link=" + WWW.EscapeURL(linkParameter) +
 		"&name=" + WWW.EscapeURL(nameParameter) +
 		"&caption=" + WWW.EscapeURL(captionParameter) +
 		"&description=" + WWW.EscapeURL(descriptionParameter) +
-		"&picture=" + WWW.EscapeURL(pictureParameter) +
+		//"&picture=" + WWW.EscapeURL(pictureParameter) +
 		"&redirect_uri=" + WWW.EscapeURL(redirectParameter));
 	}
 
