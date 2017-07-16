@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
+using appnext;
 
 public class buttonDirection : MonoBehaviour {
 
 	public bool goToMain;
 	public Animator anim;
 	public bool shareToggle = false;
+	public string placementid;
 
 	public void onClick () {
 		if (Application.loadedLevelName == "menu") {
-			anim.SetTrigger("ready");
 			GameObject.Find("Canvas/title/HSCOREnumber").GetComponent<Text>().text = PlayerPrefs.GetInt("highscore").ToString();
 			if (gameObject.name == "madeby") {
 				Application.OpenURL("http://www.twitter.com/shacxify");
+			} else if (gameObject.name == "play") {
+				anim.SetTrigger("ready");
+			} else if (gameObject.name == "rate") {
+				rate();
 			}
 		} else if (Application.loadedLevelName == "main") {
 
@@ -45,6 +50,7 @@ public class buttonDirection : MonoBehaviour {
 	}
 
 	public void Update() {
+		placementid = "956d824e-14aa-4e50-ab06-fde1bfbccfd7";
 		if (Application.loadedLevelName == "menu") {
 			anim = GameObject.Find("Canvas").GetComponent<Animator>();
 			if (anim.GetCurrentAnimatorStateInfo(0).IsName("out")) {
@@ -59,9 +65,16 @@ public class buttonDirection : MonoBehaviour {
 
 	public void ShowAd()
   {
-    if (Advertisement.IsReady())
-    {
-      Advertisement.Show();
-    }
+		Interstitial interstitial = new Interstitial(placementid);
+		interstitial.loadAd();
+		interstitial.showAd();
   }
+
+	public void rate() {
+		#if UNITY_ANDROID
+ 		Application.OpenURL("market://details?id=com.codemoney.beCAREFUL");
+ 		#elif UNITY_IPHONE
+ 		Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
+ 		#endif
+	}
 }

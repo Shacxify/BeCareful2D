@@ -16,8 +16,7 @@ public class mainBrain : MonoBehaviour {
 	public Animator pixelcircleAnim, canvasAnim;
 	public float spikeTime;
 	public int finalDistance;
-	public AudioSource deathSound;
-	public AudioClip deathsound;
+
 
 	// Update is called once per frame
 	void Start () {
@@ -55,12 +54,12 @@ public class mainBrain : MonoBehaviour {
 		if (start == true) {
 			pixelcircleAnim.SetTrigger("start");
 			if ((int)pedo.distance % freq == 0) {
-				speed += .00010f;
+				speed += .000150f;
 			}
 		}
 
 		if (gameOver == true) {
-			Destroy(GameObject.Find("Canvas/pixelcircle").GetComponent<Collider2D>());
+
 			finalDistance = (int)pedo.distance;
 			pixelcircleAnim.SetTrigger("gameover");
 			canvasAnim.SetTrigger("gameover");
