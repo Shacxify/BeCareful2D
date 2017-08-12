@@ -50,7 +50,6 @@ public class buttonDirection : MonoBehaviour {
 	}
 
 	public void Update() {
-		placementid = "956d824e-14aa-4e50-ab06-fde1bfbccfd7";
 		if (Application.loadedLevelName == "menu") {
 			anim = GameObject.Find("Canvas").GetComponent<Animator>();
 			if (anim.GetCurrentAnimatorStateInfo(0).IsName("out")) {
@@ -65,9 +64,9 @@ public class buttonDirection : MonoBehaviour {
 
 	public void ShowAd()
   {
-		Interstitial interstitial = new Interstitial(placementid);
-		interstitial.loadAd();
-		interstitial.showAd();
+		if (Advertisement.IsReady()) {
+			Advertisement.Show();
+		}
   }
 
 	public void rate() {
